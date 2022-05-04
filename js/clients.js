@@ -11,10 +11,17 @@ export async function getAllClientsData() {
     },
   };
 
-  const res = await fetch(url);
+  const res = await fetch(url, opts);
   const bodyJson = await res.json();
 
   return bodyJson;
+}
+
+export async function getClient(id) {
+  const client = await fetch(`${url}/${id}`);
+  const res = await client.json();
+
+  return res;
 }
 
 export async function createClient(client) {
@@ -36,5 +43,18 @@ export async function deleteClient(id) {
   };
 
   const res = await fetch(`${url}/${id}`, opt);
-  console.log(response.ok);
+  console.log(res.ok);
+}
+
+export async function upgradeClient(client) {
+  const opts = {
+    method: "PUT",
+    body: JSON.stringify(client),
+    headers: {
+      "content-type": "application/json",
+    },
+  };
+
+  const res = await fetch(`${url}/${client.id}`, opts);
+  console.log(`update status: ${res.ok}`);
 }
